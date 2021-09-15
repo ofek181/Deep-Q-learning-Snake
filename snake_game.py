@@ -104,9 +104,9 @@ class Snake(Logic):
                     if self.action == Direction.ESCAPE.value:
                         pygame.event.post(pygame.event.Event(pygame.QUIT))
 
-            super().move(self.action)
-            super().grow()
-            super().spawn_food(self.width, self.height)
+            self.move(self.action)
+            self.grow()
+            self.spawn_food(self.width, self.height)
 
             self.window.fill(Color.BLACK.value)
             for position in self.snake_body:
@@ -115,7 +115,7 @@ class Snake(Logic):
             pygame.draw.rect(self.window, Color.WHITE.value, pygame.Rect(self.food_position[0],
                                                                          self.food_position[1], PIXEL, PIXEL))
 
-            if super().is_game_over(self.width, self.height):
+            if self.is_game_over(self.width, self.height):
                 self._game_over()
 
             pygame.display.update()
