@@ -7,12 +7,12 @@ from game_logic import Logic
 
 class Snake(Logic):
     def __init__(self, fps: int = 10):
+        super().__init__()
         pygame.init()
         pygame.display.set_caption('Snake')
         self.fps = fps
         self.window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.action = Direction.KEEP.value
-        super().__init__()
 
     def _game_over(self):
         font = pygame.font.SysFont('times new roman', 100)
@@ -40,9 +40,9 @@ class Snake(Logic):
                         self.run_game()
 
     def _config_parameters(self):
+        super().__init__()
         self.action = Direction.KEEP.value
         self.window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        super().__init__()
 
     def _play_again(self):
         k_font = pygame.font.SysFont('times new roman', 60)
