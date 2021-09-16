@@ -1,17 +1,20 @@
 import pygame
 import random
-from consts import PIXEL, Direction
+from consts import PIXEL, Direction, WINDOW_WIDTH, WINDOW_HEIGHT
 
 
 class Logic:
-    def __init__(self, snake_position: list, snake_body: list, food_position: list,
-                 score: int, food_spawn: bool, direction: str):
-        self.snake_position = snake_position
-        self.snake_body = snake_body
-        self.food_position = food_position
-        self.score = score
-        self.food_spawn = food_spawn
-        self.direction = direction
+    def __init__(self):
+        self.snake_position = [random.randrange(1, (WINDOW_WIDTH // PIXEL)) * PIXEL,
+                               random.randrange(1, (WINDOW_HEIGHT // PIXEL)) * PIXEL]
+        self.snake_body = [[self.snake_position[0], self.snake_position[1]],
+                           [self.snake_position[0] - PIXEL, self.snake_position[1]],
+                           [self.snake_position[0] - PIXEL * 2, self.snake_position[1]]]
+        self.food_position = [random.randrange(1, (WINDOW_WIDTH // PIXEL)) * PIXEL,
+                              random.randrange(1, (WINDOW_HEIGHT // PIXEL)) * PIXEL]
+        self.score = 0
+        self.food_spawn = True
+        self.direction = Direction.UP.value
 
     def _move_position(self, action: str):
         problem = True
@@ -50,10 +53,10 @@ class Logic:
         else:
             self.snake_body.pop()
 
-    def _randomly_spawn_food(self, width: int, height: int):
+    def _randomly_spawn_food(self):
         if not self.food_spawn:
-            self.food_position = [random.randrange(1, (width // PIXEL)) * PIXEL,
-                                  random.randrange(1, (height // PIXEL)) * PIXEL]
+            self.food_position = [random.randrange(1, (WINDOW_HEIGHT // PIXEL)) * PIXEL,
+                                  random.randrange(1, (WINDOW_HEIGHT // PIXEL)) * PIXEL]
         self.food_spawn = True
 
     def move(self, action: str):
@@ -62,14 +65,14 @@ class Logic:
     def grow(self):
         self._grow_if_food_eaten()
 
-    def spawn_food(self, width: int, height: int):
-        self._randomly_spawn_food(width, height)
+    def spawn_food(self):
+        self._randomly_spawn_food()
 
-    def is_game_over(self, width: int, height: int) -> bool:
+    def is_game_over(self) -> bool:
         game_over = False
-        if self.snake_position[0] < 0 or self.snake_position[0] >= width:
+        if self.snake_position[0] < 0 or self.snake_position[0] >= WINDOW_WIDTH:
             game_over = True
-        if self.snake_position[1] < 0 or self.snake_position[1] >= height:
+        if self.snake_position[1] < 0 or self.snake_position[1] >= WINDOW_HEIGHT:
             game_over = True
         for block in self.snake_body[1:]:
             if self.snake_position == block:
