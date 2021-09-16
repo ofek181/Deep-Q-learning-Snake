@@ -1,38 +1,24 @@
 import pygame
 import sys
-import random
 import time
 from consts import PIXEL, WINDOW_WIDTH, WINDOW_HEIGHT, FPS_CONTROLLER, Color, Direction
 from game_logic import Logic
 
 
 class Snake(Logic):
-    def __init__(self, width: int = WINDOW_WIDTH, height: int = WINDOW_HEIGHT, fps: int = 10):
-        self.width = width
-        self.height = height
-        self.fps = fps
-        self.snake_position = [random.randrange(1, (self.width // PIXEL)) * PIXEL,
-                               random.randrange(1, (self.height // PIXEL)) * PIXEL]
-        self.snake_body = [[self.snake_position[0], self.snake_position[1]],
-                           [self.snake_position[0]-PIXEL, self.snake_position[1]],
-                           [self.snake_position[0]-PIXEL*2, self.snake_position[1]]]
-        self.food_position = [random.randrange(1, (self.width // PIXEL)) * PIXEL,
-                              random.randrange(1, (self.height // PIXEL)) * PIXEL]
-        self.food_spawn = True
+    def __init__(self, fps: int = 10):
         pygame.init()
         pygame.display.set_caption('Snake')
-        self.window = pygame.display.set_mode((self.width, self.height))
-        self.score = 0
-        self.direction = Direction.UP.value
+        self.fps = fps
+        self.window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.action = Direction.KEEP.value
-        super().__init__(self.snake_position, self.snake_body,
-                         self.food_position, self.score, self.food_spawn, self.direction)
+        super().__init__()
 
     def _game_over(self):
         font = pygame.font.SysFont('times new roman', 100)
         surface = font.render('GAME OVER', True, Color.RED.value)
         rect = surface.get_rect()
-        rect.midtop = (self.width / 2, rect.height / 0.8)
+        rect.midtop = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 3.2)
         self.window.fill(Color.BLACK.value)
         self.window.blit(surface, rect)
         self._show_score()
@@ -54,43 +40,32 @@ class Snake(Logic):
                         self.run_game()
 
     def _config_parameters(self):
-        self.snake_position = [random.randrange(1, (self.width // PIXEL)) * PIXEL,
-                               random.randrange(1, (self.height // PIXEL)) * PIXEL]
-        self.snake_body = [[self.snake_position[0], self.snake_position[1]],
-                           [self.snake_position[0] - PIXEL, self.snake_position[1]],
-                           [self.snake_position[0] - PIXEL * 2, self.snake_position[1]]]
-        self.food_position = [random.randrange(1, (self.width // PIXEL)) * PIXEL,
-                              random.randrange(1, (self.height // PIXEL)) * PIXEL]
-        self.food_spawn = True
-        self.direction = Direction.UP.value
         self.action = Direction.KEEP.value
-        self.score = 0
-        self.window = pygame.display.set_mode((self.width, self.height))
-        super().__init__(self.snake_position, self.snake_body,
-                         self.food_position, self.score, self.food_spawn, self.direction)
+        self.window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+        super().__init__()
 
     def _play_again(self):
         k_font = pygame.font.SysFont('times new roman', 60)
         k_surface = k_font.render('Press any key to continue', True, Color.WHITE.value)
         k_rect = k_surface.get_rect()
-        k_rect.midtop = (self.width / 2, self.height / 3)
+        k_rect.midtop = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 3)
         self.window.fill(Color.BLACK.value)
         self.window.blit(k_surface, k_rect)
         font = pygame.font.SysFont('times new roman', 40)
         surface = font.render('Or press escape to exit', True, Color.RED.value)
         rect = surface.get_rect()
-        rect.midtop = (self.width / 2, rect.height / 0.15)
+        rect.midtop = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.8)
         self.window.blit(surface, rect)
         pygame.display.flip()
         time.sleep(1)
         self._wait_for_action()
 
     def _show_score(self):
-            font = pygame.font.SysFont('times new roman', 50)
-            surface = font.render('SCORE: ' + str(self.score), True, Color.WHITE.value)
-            rect = surface.get_rect()
-            rect.midtop = (self.width / 2, self.height / 1.8)
-            self.window.blit(surface, rect)
+        score_font = pygame.font.SysFont('times new roman', 50)
+        surface = score_font.render('SCORE: ' + str(self.score), True, Color.WHITE.value)
+        rect = surface.get_rect()
+        rect.midtop = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.8)
+        self.window.blit(surface, rect)
 
     def run_game(self):
         while True:
@@ -106,7 +81,7 @@ class Snake(Logic):
 
             self.move(self.action)
             self.grow()
-            self.spawn_food(self.width, self.height)
+            self.spawn_food()
 
             self.window.fill(Color.BLACK.value)
             for position in self.snake_body:
@@ -115,7 +90,7 @@ class Snake(Logic):
             pygame.draw.rect(self.window, Color.WHITE.value, pygame.Rect(self.food_position[0],
                                                                          self.food_position[1], PIXEL, PIXEL))
 
-            if self.is_game_over(self.width, self.height):
+            if self.is_game_over():
                 self._game_over()
 
             pygame.display.update()
