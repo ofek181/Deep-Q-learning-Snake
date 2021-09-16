@@ -1,2 +1,2 @@
 # snake
-An attempt at using deep reinforcement neural network to learn how to play the game "Snake"
+An attempt at using a Deep Q neural network to learn how to play the game "Snake".
