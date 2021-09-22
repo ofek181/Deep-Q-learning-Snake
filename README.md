@@ -11,6 +11,6 @@
 ### "dqn_model" contains the deep neural network that is used for the learning model of the agent. I used a CNN model with 2 conv layers and 1 hidden layer but you can play with the hyperparameters to see which fits best.
 ### "dqn_agent" is the implementation of the reinforcement learning agent used in the game. The agent is a value-based reinforcement learning agent that estimates the return or future rewards.
 
-#### I trained a model with a 25x20 board (250 on 200) for 400,000 episodes (half of them were exploration and half were exploitation), with max step of 1000.
-##### this model is named: 25x20x400000x1000. 
+##### I trained a model with a 12x10 board (120 on 100) for 250,000 episodes (half of them were exploration and half were exploitation), with max step of 2000.
+##### the trained model is named: 12x10x250000x2000. 
 ##### you can load it using the load_model method to test the model (its location is in the trained_model folder) or you can train your own model!  
