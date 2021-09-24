@@ -190,7 +190,7 @@ class DQNAgent:
         plt.savefig(save_path)
         plt.show()
 
-        print("Max Score: {0}, Min Score: {1}, Average Score: {2}".format(max(scores),
+        print("Max score: {0}, Min score: {1}, Average score: {2}".format(max(scores),
                                                                           min(scores), sum(scores) / len(scores)))
 
 

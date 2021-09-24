@@ -19,7 +19,7 @@ class ExperienceBuffer:
             state_next.flatten(),
             np.array(int(done)).flatten()
         ])
-        self.buffer.append(experience)  # experience buffer as mention in books
+        self.buffer.append(experience)
 
     def get_batch(self, size: int) -> dict:
         batch_size = min(len(self.buffer), size)

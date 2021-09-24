@@ -29,10 +29,10 @@ class SnakeDQN:
 
 		self.output_Q = tf.keras.layers.Dense(units=4)(hidden)
 
-		# Prediction
+		# Predict
 		self.predict_action = tf.argmax(self.output_Q, 1)
 
-		# Training
+		# Train
 		self.target_Q = tf.compat.v1.placeholder(tf.float32, [None, 4])
 		self.learning_rate = tf.compat.v1.placeholder(tf.float32, name="learning_rate")
 		self.loss = tf.losses.mean_squared_error(self.target_Q, self.output_Q)

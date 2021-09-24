@@ -123,10 +123,10 @@ class Snake(Logic):
             print(state)
 
 
-def main():
-    snake = Snake(fps=10)
-    snake.play_game()
-
-
-if __name__ == '__main__':
-    main()
+# def main():
+#     snake = Snake(fps=10)
+#     snake.play_game()
+#
+#
+# if __name__ == '__main__':
+#     main()

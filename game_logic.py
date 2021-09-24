@@ -77,6 +77,7 @@ class Logic:
         for block in self.snake_body[1:]:
             if self.snake_position == block:
                 game_over = True
+
         return game_over
 
     @staticmethod
@@ -92,6 +93,7 @@ class Logic:
             action = Direction.RIGHT.value
         if event.key == pygame.K_ESCAPE:
             action = Direction.ESCAPE.value
+
         return action
 
 

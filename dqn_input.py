@@ -8,11 +8,11 @@ class InputBuffer:
         self.states = np.zeros((WINDOW_WIDTH // PIXEL, WINDOW_HEIGHT // PIXEL, self.buffer_size))
         self.zero_out_states()
 
+    def zero_out_states(self):
+        self.states = np.zeros((WINDOW_WIDTH // PIXEL, WINDOW_HEIGHT // PIXEL, self.buffer_size))
+
     def add_state(self, state: np.array):
         state_expanded = np.expand_dims(state, axis=-1)
         self.states = np.concatenate((state_expanded, self.states), axis=-1)
         self.states = np.delete(self.states, -1, -1)
-
-    def zero_out_states(self):
-        self.states = np.zeros((WINDOW_WIDTH // PIXEL, WINDOW_HEIGHT // PIXEL, self.buffer_size))
 

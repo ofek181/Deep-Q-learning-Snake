@@ -4,6 +4,7 @@ from enum import Enum
 PIXEL = 10
 WINDOW_WIDTH = 150
 WINDOW_HEIGHT = 150
+
 FPS_CONTROLLER = pygame.time.Clock()
 
 
